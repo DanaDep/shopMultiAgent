@@ -1,0 +1,22 @@
+[
+  {"id": "ORD-001", "customerId": "CUST-101", "productName": "Running Shoes Pro", "category": "Footwear", "amount": 129.99, "quantity": 2, "date": "2026-03-02", "status": "COMPLETED"},
+  {"id": "ORD-002", "customerId": "CUST-102", "productName": "Smart Watch", "category": "Electronics", "amount": 599.99, "quantity": 1, "date": "2026-03-10", "status": "COMPLETED"},
+  {"id": "ORD-003", "customerId": "CUST-103", "productName": "Yoga Mat Premium", "category": "Sports", "amount": 49.99, "quantity": 3, "date": "2026-03-18", "status": "COMPLETED"},
+  {"id": "ORD-004", "customerId": "CUST-104", "productName": "Wireless Headphones", "category": "Electronics", "amount": 199.99, "quantity": 1, "date": "2026-03-22", "status": "COMPLETED"},
+  {"id": "ORD-005", "customerId": "CUST-105", "productName": "Winter Jacket", "category": "Clothing", "amount": 249.99, "quantity": 1, "date": "2026-03-28", "status": "COMPLETED"},
+  {"id": "ORD-006", "customerId": "CUST-106", "productName": "Running Shoes Pro", "category": "Footwear", "amount": 129.99, "quantity": 1, "date": "2025-01-14", "status": "COMPLETED"},
+  {"id": "ORD-007", "customerId": "CUST-107", "productName": "Coffee Maker Deluxe", "category": "Appliances", "amount": 89.99, "quantity": 2, "date": "2025-02-05", "status": "COMPLETED"},
+  {"id": "ORD-008", "customerId": "CUST-108", "productName": "Yoga Mat Premium", "category": "Sports", "amount": 49.99, "quantity": 1, "date": "2025-03-20", "status": "COMPLETED"},
+  {"id": "ORD-009", "customerId": "CUST-109", "productName": "Wireless Headphones", "category": "Electronics", "amount": 199.99, "quantity": 2, "date": "2025-04-11", "status": "COMPLETED"},
+  {"id": "ORD-010", "customerId": "CUST-110", "productName": "Smart Watch", "category": "Electronics", "amount": 599.99, "quantity": 1, "date": "2025-05-03", "status": "COMPLETED"},
+  {"id": "ORD-011", "customerId": "CUST-111", "productName": "Winter Jacket", "category": "Clothing", "amount": 249.99, "quantity": 2, "date": "2025-06-17", "status": "COMPLETED"},
+  {"id": "ORD-012", "customerId": "CUST-112", "productName": "Running Shoes Pro", "category": "Footwear", "amount": 129.99, "quantity": 3, "date": "2025-07-08", "status": "COMPLETED"},
+  {"id": "ORD-013", "customerId": "CUST-113", "productName": "Coffee Maker Deluxe", "category": "Appliances", "amount": 89.99, "quantity": 1, "date": "2025-08-22", "status": "COMPLETED"},
+  {"id": "ORD-014", "customerId": "CUST-114", "productName": "Yoga Mat Premium", "category": "Sports", "amount": 49.99, "quantity": 4, "date": "2025-09-14", "status": "COMPLETED"},
+  {"id": "ORD-015", "customerId": "CUST-115", "productName": "Wireless Headphones", "category": "Electronics", "amount": 199.99, "quantity": 1, "date": "2025-10-01", "status": "COMPLETED"},
+  {"id": "ORD-016", "customerId": "CUST-116", "productName": "Running Shoes Pro", "category": "Footwear", "amount": 129.99, "quantity": 2, "date": "2025-10-29", "status": "COMPLETED"},
+  {"id": "ORD-017", "customerId": "CUST-117", "productName": "Smart Watch", "category": "Electronics", "amount": 599.99, "quantity": 1, "date": "2025-11-11", "status": "COMPLETED"},
+  {"id": "ORD-018", "customerId": "CUST-118", "productName": "Winter Jacket", "category": "Clothing", "amount": 249.99, "quantity": 1, "date": "2025-11-25", "status": "COMPLETED"},
+  {"id": "ORD-019", "customerId": "CUST-119", "productName": "Coffee Maker Deluxe", "category": "Appliances", "amount": 89.99, "quantity": 2, "date": "2025-12-06", "status": "COMPLETED"},
+  {"id": "ORD-020", "customerId": "CUST-120", "productName": "Yoga Mat Premium", "category": "Sports", "amount": 49.99, "quantity": 2, "date": "2025-12-19", "status": "COMPLETED"}
+]

@@ -1,0 +1,17 @@
+micronaut:
+  application:
+    name: shopMultiAgent
+
+aws:
+  access-key-id: ${AWS_ACCESS_KEY_ID}
+  secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+  region: ${AWS_REGION_KEY_PROPERTY:eu-west-1}
+
+langchain4j:
+  bedrock:
+    chat-model:
+      model-id: ${AWS_BEDROCK_MODEL_ID}
+      region: ${AWS_REGION_KEY_PROPERTY}
+      timeout: 60s
+      max-output-tokens: 4096
+      temperature: 0.2

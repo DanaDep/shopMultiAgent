@@ -1,0 +1,10 @@
+[
+  {"id": "REF-001", "orderId": "ORD-004", "customerId": "CUST-104", "productName": "Wireless Headphones", "amount": 199.99, "date": "2026-03-25", "reason": "Defective product"},
+  {"id": "REF-002", "orderId": "ORD-005", "customerId": "CUST-105", "productName": "Winter Jacket", "amount": 249.99, "date": "2026-03-30", "reason": "Wrong size delivered"},
+  {"id": "REF-003", "orderId": "ORD-002", "customerId": "CUST-102", "productName": "Smart Watch", "amount": 599.99, "date": "2026-03-15", "reason": "Changed mind"},
+  {"id": "REF-004", "orderId": "ORD-009", "customerId": "CUST-109", "productName": "Wireless Headphones", "amount": 199.99, "date": "2025-05-02", "reason": "Defective product"},
+  {"id": "REF-005", "orderId": "ORD-015", "customerId": "CUST-115", "productName": "Wireless Headphones", "amount": 199.99, "date": "2025-10-14", "reason": "Not as described"},
+  {"id": "REF-006", "orderId": "ORD-011", "customerId": "CUST-111", "productName": "Winter Jacket", "amount": 249.99, "date": "2025-07-01", "reason": "Wrong size delivered"},
+  {"id": "REF-007", "orderId": "ORD-013", "customerId": "CUST-113", "productName": "Coffee Maker Deluxe", "amount": 89.99, "date": "2025-09-03", "reason": "Defective product"},
+  {"id": "REF-008", "orderId": "ORD-017", "customerId": "CUST-117", "productName": "Smart Watch", "amount": 599.99, "date": "2025-11-20", "reason": "Changed mind"}
+]

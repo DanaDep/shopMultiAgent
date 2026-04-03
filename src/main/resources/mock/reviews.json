@@ -1,0 +1,17 @@
+[
+  {"id": "REV-001", "customerId": "CUST-201", "productName": "Running Shoes Pro", "rating": 5, "comment": "Amazing comfort and durability, best running shoes I've owned!", "date": "2026-03-20"},
+  {"id": "REV-002", "customerId": "CUST-202", "productName": "Running Shoes Pro", "rating": 4, "comment": "Great fit and grip. Slightly expensive but worth it.", "date": "2025-08-14"},
+  {"id": "REV-003", "customerId": "CUST-203", "productName": "Running Shoes Pro", "rating": 5, "comment": "Lightweight and responsive. Perfect for long runs.", "date": "2025-11-02"},
+  {"id": "REV-004", "customerId": "CUST-204", "productName": "Yoga Mat Premium", "rating": 5, "comment": "Excellent grip and cushioning. Love the thickness.", "date": "2026-03-25"},
+  {"id": "REV-005", "customerId": "CUST-205", "productName": "Yoga Mat Premium", "rating": 5, "comment": "Non-slip surface is fantastic. Highly recommended!", "date": "2025-10-08"},
+  {"id": "REV-006", "customerId": "CUST-206", "productName": "Wireless Headphones", "rating": 1, "comment": "Keeps disconnecting after 10 minutes. Very frustrating.", "date": "2026-03-27"},
+  {"id": "REV-007", "customerId": "CUST-207", "productName": "Wireless Headphones", "rating": 2, "comment": "Sound quality is mediocre and battery drains quickly.", "date": "2025-11-15"},
+  {"id": "REV-008", "customerId": "CUST-208", "productName": "Wireless Headphones", "rating": 3, "comment": "Decent for the price, but nothing special.", "date": "2025-05-20"},
+  {"id": "REV-009", "customerId": "CUST-209", "productName": "Winter Jacket", "rating": 4, "comment": "Very warm and stylish. Sizing runs a bit large.", "date": "2025-12-10"},
+  {"id": "REV-010", "customerId": "CUST-210", "productName": "Winter Jacket", "rating": 3, "comment": "Good quality but the zipper broke after two months.", "date": "2026-02-18"},
+  {"id": "REV-011", "customerId": "CUST-211", "productName": "Coffee Maker Deluxe", "rating": 2, "comment": "Stopped working after three weeks. Very disappointed.", "date": "2025-09-11"},
+  {"id": "REV-012", "customerId": "CUST-212", "productName": "Coffee Maker Deluxe", "rating": 3, "comment": "Makes decent coffee but is noisy and slow to heat up.", "date": "2025-03-05"},
+  {"id": "REV-013", "customerId": "CUST-213", "productName": "Smart Watch", "rating": 5, "comment": "Incredible features and battery life. Best purchase this year!", "date": "2026-03-12"},
+  {"id": "REV-014", "customerId": "CUST-214", "productName": "Smart Watch", "rating": 4, "comment": "Great fitness tracking. The app could be more intuitive.", "date": "2025-06-22"},
+  {"id": "REV-015", "customerId": "CUST-215", "productName": "Smart Watch", "rating": 5, "comment": "Stylish, accurate, and the notifications are seamless.", "date": "2025-12-01"}
+]
