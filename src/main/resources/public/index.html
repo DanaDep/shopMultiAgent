@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopMultiAgent Chat</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      color: #212121;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      flex-shrink: 0;
+    }
+
+    header .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #212121;
+    }
+
+    header p {
+      font-size: 12px;
+      color: #757575;
+      margin-top: 1px;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+    }
+
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .msg-row.user  { justify-content: flex-end; }
+    .msg-row.agent { justify-content: flex-start; }
+
+    .bubble-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .bubble {
+      max-width: min(72%, 540px);
+      padding: 10px 14px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .msg-row.user  .bubble {
+      background: #1976d2;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      white-space: pre-wrap;
+    }
+
+    .msg-row.agent .bubble {
+      background: #ffffff;
+      color: #212121;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.1);
+      max-width: min(95%, 1400px);
+    }
+
+    /* markdown rendering inside agent bubbles */
+    .msg-row.agent .bubble p          { margin-bottom: .5em; }
+    .msg-row.agent .bubble p:last-child { margin-bottom: 0; }
+    .msg-row.agent .bubble h1,
+    .msg-row.agent .bubble h2,
+    .msg-row.agent .bubble h3         { font-size: 1em; font-weight: 700; margin: .75em 0 .3em; }
+    .msg-row.agent .bubble ul,
+    .msg-row.agent .bubble ol         { padding-left: 1.4em; margin-bottom: .5em; }
+    .msg-row.agent .bubble li         { margin-bottom: .2em; }
+    .msg-row.agent .bubble code       { font-family: "SFMono-Regular", Consolas, monospace; font-size: .85em;
+                                        background: #f0f0f0; padding: .1em .35em; border-radius: 4px; }
+    .msg-row.agent .bubble pre        { background: #f0f0f0; border-radius: 8px; padding: 10px 12px;
+                                        overflow-x: auto; margin-bottom: .5em; }
+    .msg-row.agent .bubble pre code   { background: none; padding: 0; font-size: .82em; }
+    .msg-row.agent .bubble blockquote { border-left: 3px solid #bdbdbd; padding-left: .8em; color: #616161; margin-bottom: .5em; }
+    .msg-row.agent .bubble table      { border-collapse: collapse; width: 100%; margin-bottom: .5em; font-size: .9em; }
+    .msg-row.agent .bubble th,
+    .msg-row.agent .bubble td         { border: 1px solid #e0e0e0; padding: 4px 10px; text-align: left; }
+    .msg-row.agent .bubble th         { background: #f5f5f5; font-weight: 600; }
+    .msg-row.agent .bubble a          { color: #1976d2; text-decoration: none; }
+    .msg-row.agent .bubble a:hover    { text-decoration: underline; }
+    .msg-row.agent .bubble strong     { font-weight: 700; }
+    .msg-row.agent .bubble em         { font-style: italic; }
+
+    /* thinking dots */
+    .thinking .bubble {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #9e9e9e;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: .2s; }
+    .dot:nth-child(3) { animation-delay: .4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.7); opacity: .5; }
+      40%            { transform: scale(1);   opacity: 1;  }
+    }
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e0e0e0;
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    #input {
+      flex: 1;
+      border: 1px solid #e0e0e0;
+      border-radius: 22px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      outline: none;
+      max-height: 140px;
+      overflow-y: auto;
+      line-height: 1.5;
+      color: #212121;
+      background: #fafafa;
+      transition: border-color .2s;
+    }
+    #input:focus { border-color: #1976d2; background: #fff; }
+    #input::placeholder { color: #9e9e9e; }
+
+    #send {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .2s, transform .1s;
+    }
+    #send:hover:not(:disabled) { background: #1565c0; }
+    #send:active:not(:disabled) { transform: scale(.93); }
+    #send:disabled { background: #bdbdbd; cursor: not-allowed; }
+
+    #send svg { width: 18px; height: 18px; }
+
+    .hint {
+      font-size: 11px;
+      color: #9e9e9e;
+      text-align: center;
+      padding-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar">S</div>
+  <div>
+    <h1>ShopMultiAgent Chat</h1>
+    <p>Multi-agent shopping assistant</p>
+  </div>
+</header>
+
+<div id="messages"></div>
+
+<footer>
+  <textarea id="input" rows="1" placeholder="Ask about products, returns, reviews… (Enter to send, Shift+Enter for newline)"></textarea>
+  <button id="send" title="Send">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="22" y1="2" x2="11" y2="13"/>
+      <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+    </svg>
+  </button>
+</footer>
+
+<script>
+  const messagesEl = document.getElementById('messages');
+  const inputEl    = document.getElementById('input');
+  const sendBtn    = document.getElementById('send');
+
+  function scrollToBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function appendMessage(role, text) {
+    const row = document.createElement('div');
+    row.className = `msg-row ${role}`;
+
+    if (role === 'agent') {
+      const av = document.createElement('div');
+      av.className = 'bubble-avatar';
+      av.textContent = 'AI';
+      row.appendChild(av);
+    }
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    if (role === 'agent') {
+      bubble.innerHTML = marked.parse(text);
+    } else {
+      bubble.textContent = text;
+    }
+    row.appendChild(bubble);
+
+    messagesEl.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  function showThinking() {
+    const row = document.createElement('div');
+    row.className = 'msg-row agent thinking';
+
+    const av = document.createElement('div');
+    av.className = 'bubble-avatar';
+    av.textContent = 'AI';
+    row.appendChild(av);
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+    row.appendChild(bubble);
+
+    messagesEl.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  function setLoading(on) {
+    sendBtn.disabled = on;
+    inputEl.disabled = on;
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+
+    appendMessage('user', text);
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+    setLoading(true);
+
+    const thinkingRow = showThinking();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(text),
+      });
+
+      thinkingRow.remove();
+
+      if (!res.ok) {
+        const err = await res.text().catch(() => 'Unknown error');
+        appendMessage('agent', `Error ${res.status}: ${err}`);
+      } else {
+        const reply = await res.text();
+        appendMessage('agent', reply);
+      }
+    } catch (e) {
+      thinkingRow.remove();
+      appendMessage('agent', `Network error: ${e.message}`);
+    } finally {
+      setLoading(false);
+      inputEl.focus();
+    }
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  /* auto-resize textarea */
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
+  });
+</script>
+
+</body>
+</html>

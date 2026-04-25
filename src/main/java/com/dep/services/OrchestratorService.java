@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Singleton
 @RequiredArgsConstructor
 @Slf4j
-public class PipelineService {
+public class OrchestratorService {
 
 	private final ResearcherAgent researcherAgent;
 	private final WriterAgent writerAgent;

@@ -1,11 +1,16 @@
 micronaut:
   application:
     name: shopMultiAgent
+  router:
+    static-resources:
+      default:
+        paths: classpath:public
+        mapping: /**
 
 aws:
   access-key-id: ${AWS_ACCESS_KEY_ID}
   secret-access-key: ${AWS_SECRET_ACCESS_KEY}
-  region: ${AWS_REGION_KEY_PROPERTY:eu-west-1}
+  region: ${AWS_REGION_KEY_PROPERTY}
 
 langchain4j:
   bedrock:

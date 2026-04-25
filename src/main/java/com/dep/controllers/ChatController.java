@@ -1,5 +1,5 @@
 package com.dep.controllers;
-import com.dep.services.PipelineService;
+import com.dep.services.OrchestratorService;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChatController {
 
-	private final PipelineService pipelineService;
+	private final OrchestratorService orchestratorService;
 
 	@Post("/chat")
 	public HttpResponse<String> chat(@Body String message) {
@@ -26,7 +26,7 @@ public class ChatController {
 		}
 
 		try {
-			String result = pipelineService.executePipeline(topic);
+			String result = orchestratorService.executePipeline(topic);
 			return HttpResponse.ok(result);
 		} catch (Exception e) {
 			log.error("Error processing chat request", e);

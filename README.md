@@ -1,23 +1,40 @@
-## Micronaut 4.10.11 Documentation
+# ShopMultiAgent
 
-- [User Guide](https://docs.micronaut.io/4.10.11/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.10.11/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.10.11/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+A multi-agent shopping assistant built on Micronaut 4 and LangChain4j with AWS Bedrock.
 
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
-- [GraalVM Gradle Plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
-- [Shadow Gradle Plugin](https://gradleup.com/shadow/)
-## Feature micronaut-aot documentation
+An `OrchestratorService` coordinates two agents — a `ResearcherAgent` that gathers findings on a topic and a `WriterAgent` that turns those findings into a written response. The chat UI is served as a single static page and talks to the orchestrator over `POST /api/chat`.
 
+## Stack
 
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
+- Java 21, Micronaut 4.10.11 (Netty)
+- LangChain4j on AWS Bedrock
+- Gradle 8 (Kotlin DSL), Shadow, Micronaut AOT, GraalVM native image
 
+## Run
 
-## Feature serialization-jackson documentation
+```bash
+# build
+./gradlew build
 
+# run (http://localhost:8080)
+./gradlew run
 
-- [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
+```
 
+## Configuration
 
+AWS Bedrock credentials and region are read from the standard AWS environment / config. App settings live in `src/main/resources/application.yml`.
+
+## Project layout
+
+```
+src/main/java/com/dep/
+  Application.java            # entry point
+  controllers/ChatController.java
+  services/OrchestratorService.java
+  agents/                     # ResearcherAgent, WriterAgent
+  dtos/                       # Finding, ResearchResult
+src/main/resources/
+  application.yml
+  public/index.html           # chat UI
+```
