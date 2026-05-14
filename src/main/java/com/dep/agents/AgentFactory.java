@@ -30,4 +30,11 @@ public class AgentFactory {
 				.chatModel( chatModel )
 				.build();
 	}
+
+	@Bean
+	public CriticAgent criticAgent( ChatModel chatModel ) {
+		return AiServices.builder( CriticAgent.class )
+				.chatModel( chatModel )
+				.build();
+	}
 }
