@@ -13,5 +13,9 @@
   {"id": "REV-012", "customerId": "CUST-212", "productName": "Coffee Maker Deluxe", "rating": 3, "comment": "Makes decent coffee but is noisy and slow to heat up.", "date": "2025-03-05"},
   {"id": "REV-013", "customerId": "CUST-213", "productName": "Smart Watch", "rating": 5, "comment": "Incredible features and battery life. Best purchase this year!", "date": "2026-03-12"},
   {"id": "REV-014", "customerId": "CUST-214", "productName": "Smart Watch", "rating": 4, "comment": "Great fitness tracking. The app could be more intuitive.", "date": "2025-06-22"},
-  {"id": "REV-015", "customerId": "CUST-215", "productName": "Smart Watch", "rating": 5, "comment": "Stylish, accurate, and the notifications are seamless.", "date": "2025-12-01"}
+  {"id": "REV-015", "customerId": "CUST-215", "productName": "Smart Watch", "rating": 5, "comment": "Stylish, accurate, and the notifications are seamless.", "date": "2025-12-01"},
+  {"id": "REV-016", "customerId": "CUST-216", "productName": "Trail Hiking Boots", "rating": 5, "comment": "Best boots I've ever worn — perfect grip on wet trails.", "date": "2026-04-15"},
+  {"id": "REV-017", "customerId": "CUST-217", "productName": "Gaming Mouse Elite", "rating": 1, "comment": "Double-click issue out of the box. Returned within a week.", "date": "2026-04-09"},
+  {"id": "REV-018", "customerId": "CUST-218", "productName": "Gaming Mouse Elite", "rating": 2, "comment": "Side buttons stopped responding after a month of use.", "date": "2026-03-28"},
+  {"id": "REV-019", "customerId": "CUST-219", "productName": "Smart Watch", "rating": 3, "comment": "Decent watch but heart rate sensor is inconsistent.", "date": "2026-02-08"}
 ]

@@ -27,11 +27,12 @@ public class OrchestratorService {
 		int maxRetries = 3;
 		for(int i = 0; i < maxRetries; i++) {
 			 Evaluation evaluation = criticAgent.evaluate(result, findings);
-			 log.info("Evaluation completed. Acceptable: {}, Issues: {}", evaluation.isAcceptable(), evaluation.getIssues());
+			 log.info("Evaluation completed. Acceptable: {}, Issues: {}", evaluation.isAcceptable(), evaluation.getIssues().size());
 
 			 if(evaluation.isAcceptable()) {
 				return result;
 			 }
+			 log.info("Revision needed. Attempt {}/{}. Issues: {}", i + 1, maxRetries, evaluation.getIssues());
 			 result = writerAgent.revise(findings, result, evaluation.getIssues());
 		}
 
