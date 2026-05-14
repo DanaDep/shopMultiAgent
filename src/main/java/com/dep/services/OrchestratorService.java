@@ -1,9 +1,11 @@
 package com.dep.services;
+import java.util.List;
 import com.dep.agents.CriticAgent;
 import com.dep.agents.ResearcherAgent;
 import com.dep.agents.WriterAgent;
 import com.dep.dtos.Evaluation;
 import com.dep.dtos.ResearchResult;
+import com.dep.enums.IssueType;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +28,24 @@ public class OrchestratorService {
 
 		int maxRetries = 3;
 		for(int i = 0; i < maxRetries; i++) {
-			 Evaluation evaluation = criticAgent.evaluate(result, findings);
-			 log.info("Evaluation completed. Acceptable: {}, Issues: {}", evaluation.isAcceptable(), evaluation.getIssues().size());
+			 Evaluation evaluation = criticAgent.evaluate(topic, result, findings);
+			 log.info("Evaluation completed. Acceptable: {}, Issues: {}", evaluation.isAcceptable(), evaluation.getIssues());
 
 			 if(evaluation.isAcceptable()) {
 				return result;
 			 }
-			 log.info("Revision needed. Attempt {}/{}. Issues: {}", i + 1, maxRetries, evaluation.getIssues());
-			 result = writerAgent.revise(findings, result, evaluation.getIssues());
+
+			List<String> researchIssues = evaluation.getIssuesByType( IssueType.RESEARCH );
+			List<String> writingIssues = evaluation.getIssuesByType( IssueType.WRITING );
+
+			if( !researchIssues.isEmpty() ) {
+				log.info("Research issues found: {}. Deep researching and rewriting...", researchIssues.size());
+				findings = researcherAgent.deepResearch(topic, findings, researchIssues);
+				result   = writerAgent.write(findings);
+			} else {
+				log.info("Writing issues found: {}. Revising...", writingIssues.size());
+				result = writerAgent.revise(findings, result, writingIssues);
+			}
 		}
 
 		return result;
