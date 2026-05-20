@@ -18,5 +18,16 @@
   {"id": "ORD-017", "customerId": "CUST-117", "productName": "Smart Watch", "category": "Electronics", "amount": 599.99, "quantity": 1, "date": "2025-11-11", "status": "COMPLETED"},
   {"id": "ORD-018", "customerId": "CUST-118", "productName": "Winter Jacket", "category": "Clothing", "amount": 249.99, "quantity": 1, "date": "2025-11-25", "status": "COMPLETED"},
   {"id": "ORD-019", "customerId": "CUST-119", "productName": "Coffee Maker Deluxe", "category": "Appliances", "amount": 89.99, "quantity": 2, "date": "2025-12-06", "status": "COMPLETED"},
-  {"id": "ORD-020", "customerId": "CUST-120", "productName": "Yoga Mat Premium", "category": "Sports", "amount": 49.99, "quantity": 2, "date": "2025-12-19", "status": "COMPLETED"}
+  {"id": "ORD-020", "customerId": "CUST-120", "productName": "Yoga Mat Premium", "category": "Sports", "amount": 49.99, "quantity": 2, "date": "2025-12-19", "status": "COMPLETED"},
+  {"id": "ORD-021", "customerId": "CUST-121", "productName": "Smart Watch", "category": "Electronics", "amount": 599.99, "quantity": 1, "date": "2026-04-22", "status": "CANCELLED"},
+  {"id": "ORD-022", "customerId": "CUST-122", "productName": "Coffee Maker Deluxe", "category": "Appliances", "amount": 89.99, "quantity": 1, "date": "2025-08-30", "status": "CANCELLED"},
+  {"id": "ORD-023", "customerId": "CUST-123", "productName": "Bluetooth Speaker Lite", "category": "Electronics", "amount": 79.99, "quantity": 1, "date": "2026-04-05", "status": "COMPLETED"},
+  {"id": "ORD-024", "customerId": "CUST-124", "productName": "Bluetooth Speaker Lite", "category": "Electronics", "amount": 79.99, "quantity": 2, "date": "2026-04-18", "status": "COMPLETED"},
+  {"id": "ORD-025", "customerId": "CUST-125", "productName": "Bluetooth Speaker Lite", "category": "Electronics", "amount": 79.99, "quantity": 1, "date": "2025-11-09", "status": "COMPLETED"},
+  {"id": "ORD-026", "customerId": "CUST-126", "productName": "Trail Hiking Boots", "category": "Footwear", "amount": 159.99, "quantity": 1, "date": "2026-04-12", "status": "COMPLETED"},
+  {"id": "ORD-027", "customerId": "CUST-127", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2026-04-03", "status": "COMPLETED"},
+  {"id": "ORD-028", "customerId": "CUST-128", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2026-04-08", "status": "COMPLETED"},
+  {"id": "ORD-029", "customerId": "CUST-129", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 2, "date": "2026-03-15", "status": "COMPLETED"},
+  {"id": "ORD-030", "customerId": "CUST-130", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2026-02-20", "status": "COMPLETED"},
+  {"id": "ORD-031", "customerId": "CUST-131", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2025-10-15", "status": "COMPLETED"}
 ]

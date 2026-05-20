@@ -59,7 +59,9 @@ public class OrderTool {
                 .map(e -> new TopSellingProduct(
                         e.getKey(),
                         e.getValue().stream().mapToInt(Order::quantity).sum(),
-                        e.getValue().stream().map(Order::amount).reduce(BigDecimal.ZERO, BigDecimal::add)
+                        e.getValue().stream()
+                                .map(o -> o.amount().multiply(BigDecimal.valueOf(o.quantity())))
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)
                 ))
                 .sorted(Comparator.comparingInt(TopSellingProduct::totalUnitsSold).reversed())
                 .collect(Collectors.toList());
