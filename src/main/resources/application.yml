@@ -20,3 +20,13 @@ langchain4j:
       timeout: 60s
       max-output-tokens: 4096
       temperature: 0.2
+
+otel:
+  service:
+    name: shop-multi-agent
+  traces:
+    exporter: otlp
+  exporter:
+    otlp:
+      endpoint: http://localhost:6006
+      protocol: http/protobuf
