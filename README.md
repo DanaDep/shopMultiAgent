@@ -33,6 +33,32 @@ The chat UI is served as a single static page and talks to the orchestrator over
 
 AWS Bedrock credentials and region are read from the standard AWS environment / config. App settings live in `src/main/resources/application.yml`.
 
+## Observability
+
+The app emits OpenTelemetry traces for the whole agent pipeline: one span per LLM call (custom LangChain4j `ChatModelListener`), per agent step (`@NewSpan` in `OrchestratorService`), and per HTTP request (Micronaut). Spans carry both `gen_ai.*` (OTel GenAI semconv) and OpenInference attributes, so any OTLP-compatible backend can render them.
+
+The app exports to a single stable endpoint — a local OpenTelemetry Collector (`localhost:4318`) — which fans the same spans out to three backends simultaneously (config: `observability/otel-collector-config.yaml`):
+
+| Backend | Where | Notes |
+|---|---|---|
+| Arize Phoenix | http://localhost:6006 | local container, no auth |
+| Langfuse | https://cloud.langfuse.com | EU cloud; needs `LANGFUSE_AUTH` |
+| LangSmith | https://eu.smith.langchain.com | EU cloud; needs `LANGSMITH_API_KEY` |
+
+Start the stack (from a shell where the env vars below are set):
+
+```powershell
+# Langfuse uses HTTP Basic auth built from the project's public/secret key pair
+$env:LANGFUSE_AUTH = "Basic " + [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("pk-lf-xxx:sk-lf-xxx"))
+$env:LANGSMITH_API_KEY = "lsv2_xxx"
+
+docker compose -f observability/docker-compose.yml up -d
+```
+
+Troubleshooting: `docker logs otel-collector` — the `debug` exporter logs every batch received; per-backend export failures (401 = bad credentials, 403 = wrong region, 404 = doubled `/v1/traces` path) appear as `error` entries naming the failing exporter.
+
+The backend comparison and selection criteria are tracked in `docs/adr/001-llm-observability-backend.md`.
+
 ## Project layout
 
 ```
@@ -49,4 +75,7 @@ src/main/resources/
   application.yml
   mock/                           # orders.json, reviews.json, returns.json, refunds.json
   public/index.html               # chat UI
+observability/
+  docker-compose.yml              # Phoenix + OTel Collector stack
+  otel-collector-config.yaml      # OTLP receiver + fan-out exporters (Phoenix, Langfuse, LangSmith)
 ```

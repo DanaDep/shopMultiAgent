@@ -28,5 +28,5 @@ otel:
     exporter: otlp
   exporter:
     otlp:
-      endpoint: http://localhost:6006
+      endpoint: http://localhost:4318   # OTel Collector (fans out to backends; see observability/)
       protocol: http/protobuf

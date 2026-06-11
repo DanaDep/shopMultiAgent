@@ -1,0 +1,32 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  # NOTE: the otlp_http exporter appends /v1/traces automatically — endpoints must NOT include it
+  otlp_http/phoenix:
+    endpoint: http://phoenix:6006
+
+  otlp_http/langfuse:
+    endpoint: https://cloud.langfuse.com/api/public/otel
+    headers:
+      Authorization: ${env:LANGFUSE_AUTH}   # "Basic base64(pk-lf-...:sk-lf-...)"
+      x-langfuse-ingestion-version: "4"     # without this, UI visibility lags the API by up to 10 min
+
+  otlp_http/langsmith:
+    endpoint: https://eu.api.smith.langchain.com/otel   # EU-region account; US would be api.smith.langchain.com
+    headers:
+      x-api-key: ${env:LANGSMITH_API_KEY}
+      Langsmith-Project: shop-multi-agent
+
+  # Prints a per-batch summary to the collector log — our troubleshooting window
+  debug:
+    verbosity: basic
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp_http/phoenix, otlp_http/langfuse, otlp_http/langsmith, debug]
