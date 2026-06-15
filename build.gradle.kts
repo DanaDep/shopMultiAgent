@@ -20,6 +20,9 @@ dependencies {
     implementation("io.micronaut.langchain4j:micronaut-langchain4j-core")
     implementation("dev.langchain4j:langchain4j-bedrock")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
+    // OTel
+    implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp")
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("ch.qos.logback:logback-classic")

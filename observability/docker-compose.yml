@@ -1,0 +1,20 @@
+services:
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    container_name: phoenix
+    ports:
+      - "6006:6006"   # UI + OTLP/HTTP ingest on the same port
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - "4318:4318"   # OTLP/HTTP ingest — the app's single, stable endpoint
+    environment:
+      - LANGFUSE_AUTH      # passed through from the host shell that runs `docker compose`
+      - LANGSMITH_API_KEY
+    depends_on:
+      - phoenix

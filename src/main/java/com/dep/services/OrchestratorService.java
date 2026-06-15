@@ -6,6 +6,8 @@ import com.dep.agents.WriterAgent;
 import com.dep.dtos.Evaluation;
 import com.dep.dtos.ResearchResult;
 import com.dep.enums.IssueType;
+import io.micronaut.tracing.annotation.NewSpan;
+import io.opentelemetry.api.trace.Span;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,35 +21,59 @@ public class OrchestratorService {
 	private final WriterAgent writerAgent;
 	private final CriticAgent criticAgent;
 
+	@NewSpan
 	public String executePipeline(String topic) {
-		ResearchResult findings = researcherAgent.research(topic);
-		log.debug("Research completed. Findings: size{}", findings.getFindings().size());
+		Span.current().setAttribute("openinference.span.kind", "CHAIN");
+		ResearchResult findings = research(topic);
+		String result = write(findings);
 
-		String result = writerAgent.write(findings);
-		log.debug("Writing completed. Result: {}", result);
+		for (int i = 0; i < 3; i++) {
+			Evaluation evaluation = evaluate(topic, result, findings);
+			if (evaluation.isAcceptable()) return result;
 
-		int maxRetries = 3;
-		for(int i = 0; i < maxRetries; i++) {
-			 Evaluation evaluation = criticAgent.evaluate(topic, result, findings);
-			 log.info("Evaluation completed. Acceptable: {}, Issues: {}", evaluation.isAcceptable(), evaluation.getIssues());
-
-			 if(evaluation.isAcceptable()) {
-				return result;
-			 }
-
-			List<String> researchIssues = evaluation.getIssuesByType( IssueType.RESEARCH );
-			List<String> writingIssues = evaluation.getIssuesByType( IssueType.WRITING );
-
-			if( !researchIssues.isEmpty() ) {
-				log.info("Research issues found: {}. Deep researching and rewriting...", researchIssues.size());
-				findings = researcherAgent.deepResearch(topic, findings, researchIssues);
-				result   = writerAgent.write(findings);
+			List<String> researchIssues = evaluation.getIssuesByType(IssueType.RESEARCH);
+			if (!researchIssues.isEmpty()) {
+				findings = deepResearch(topic, findings, researchIssues);
+				result = write(findings);
 			} else {
-				log.info("Writing issues found: {}. Revising...", writingIssues.size());
-				result = writerAgent.revise(findings, result, writingIssues);
+				result = revise(findings, result, evaluation.getIssuesByType(IssueType.WRITING));
 			}
 		}
-
 		return result;
+	}
+
+	@NewSpan
+	protected ResearchResult research(String topic) {
+		Span.current().setAttribute("openinference.span.kind", "AGENT");
+		Span.current().setAttribute("agent.name", "researcher");
+		return researcherAgent.research(topic);
+	}
+
+	@NewSpan
+	protected ResearchResult deepResearch(String topic, ResearchResult prev, List<String> issues) {
+		Span.current().setAttribute("openinference.span.kind", "AGENT");
+		Span.current().setAttribute("agent.name", "researcher");
+		return researcherAgent.deepResearch(topic, prev, issues);
+	}
+
+	@NewSpan
+	protected String write(ResearchResult findings) {
+		Span.current().setAttribute("openinference.span.kind", "AGENT");
+		Span.current().setAttribute("agent.name", "writer");
+		return writerAgent.write(findings);
+	}
+
+	@NewSpan
+	protected String revise(ResearchResult findings, String draft, List<String> issues) {
+		Span.current().setAttribute("openinference.span.kind", "AGENT");
+		Span.current().setAttribute("agent.name", "writer");
+		return writerAgent.revise(findings, draft, issues);
+	}
+
+	@NewSpan
+	protected Evaluation evaluate(String topic, String result, ResearchResult findings) {
+		Span.current().setAttribute("openinference.span.kind", "AGENT");
+		Span.current().setAttribute("agent.name", "critic");
+		return criticAgent.evaluate(topic, result, findings);
 	}
 }
