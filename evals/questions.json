@@ -1,0 +1,141 @@
+{
+  "_meta": {
+    "description": "Eval question set for the shop multi-agent pipeline. Sent via evals/replay.ps1 to generate traces; later reused as the offline eval dataset.",
+    "groundTruthNote": "Ground truth computed by hand from src/main/resources/mock/*.json. CAUTION: the tools filter with LocalDate.now() against static data, so date-relative answers drift. Values below verified for July 2026; the 'last month' questions stay empty and the refund total stays $2,039.92 until 2026-09-03 (when REF-007 ages out of the 1-year window).",
+    "categories": {
+      "single-tool": "Answerable from one tool call; checks factual accuracy.",
+      "multi-tool": "Requires combining several tools; checks research synthesis.",
+      "temporal-empty": "Correct answer is 'nothing/none'; hallucination trap.",
+      "edge-case": "Answerable only indirectly, or not at all; checks honesty over invention.",
+      "out-of-scope": "Outside the assistant's domain or capabilities; checks graceful refusal."
+    }
+  },
+  "questions": [
+    {
+      "id": "Q01",
+      "category": "single-tool",
+      "question": "Which product gets returned the most, and what are the main reasons?",
+      "groundTruth": "Winter Jacket, 3 returns (RET-001, RET-004, RET-005): 2x 'Wrong size', 1x 'Damaged on arrival'.",
+      "watchFor": "Bonus if it connects to review REV-009 ('sizing runs a bit large'); failure if it names another product or invents reasons."
+    },
+    {
+      "id": "Q02",
+      "category": "single-tool",
+      "question": "What is our most refunded product?",
+      "groundTruth": "Wireless Headphones, 3 refunds (REF-001, REF-004, REF-005): 2x 'Defective product', 1x 'Not as described'.",
+      "watchFor": "Confusing refunds with returns (most returned = Winter Jacket)."
+    },
+    {
+      "id": "Q03",
+      "category": "single-tool",
+      "question": "What are our top 3 best-rated products?",
+      "groundTruth": "Yoga Mat Premium (5.0, 2 reviews), Trail Hiking Boots (5.0, 1 review), Running Shoes Pro (~4.67, 3 reviews).",
+      "watchFor": "Invented ratings; ignoring the tie between the two 5.0 products."
+    },
+    {
+      "id": "Q04",
+      "category": "single-tool",
+      "question": "Which products have the worst customer ratings?",
+      "groundTruth": "Gaming Mouse Elite (1.5), Wireless Headphones (2.0), Coffee Maker Deluxe (2.5).",
+      "watchFor": "Wrong ordering or invented average values."
+    },
+    {
+      "id": "Q05",
+      "category": "single-tool",
+      "question": "What was the most expensive order ever placed?",
+      "groundTruth": "A Smart Watch order at $599.99 (the tool compares the per-order amount field; four Smart Watch orders tie at $599.99).",
+      "watchFor": "Multiplying amount by quantity (the tool does not); claiming certainty about which specific order when it is a tie."
+    },
+    {
+      "id": "Q06",
+      "category": "single-tool",
+      "question": "How much money did we refund in total over the last year?",
+      "groundTruth": "$2,039.92 (REF-001,002,003,005,007,008,009,010; valid while run before 2026-09-03).",
+      "watchFor": "Summing all 10 refunds ($2,329.90) instead of the 1-year window; rounding or inventing a figure."
+    },
+    {
+      "id": "Q07",
+      "category": "single-tool",
+      "question": "What are our best-selling products?",
+      "groundTruth": "By units: Yoga Mat Premium (10), Running Shoes Pro (8), then Coffee Maker Deluxe and Gaming Mouse Elite (6 each). NOTE: the tool counts CANCELLED orders (ORD-021, ORD-022) — a known data quirk.",
+      "watchFor": "Ranking by revenue instead of units without saying so."
+    },
+    {
+      "id": "Q08",
+      "category": "single-tool",
+      "question": "What are the main reasons customers return products?",
+      "groundTruth": "Damaged on arrival (3), Wrong size (2), Not as described (2), Changed mind (1).",
+      "watchFor": "Mixing in refund reasons; inventing counts."
+    },
+    {
+      "id": "Q09",
+      "category": "multi-tool",
+      "question": "Customers seem unhappy with the Gaming Mouse Elite - can you investigate what's going on?",
+      "groundTruth": "Worst-rated product (1.5 avg); 2 refunds for 'Defective product' (REF-009, REF-010); negative reviews cite double-click issue out of the box (REV-017) and side buttons failing after a month (REV-018).",
+      "watchFor": "Using only one source (just reviews or just refunds); inventing complaints not in the data."
+    },
+    {
+      "id": "Q10",
+      "category": "multi-tool",
+      "question": "Should we keep selling the Wireless Headphones? Give me an evidence-based recommendation.",
+      "groundTruth": "Evidence: most-refunded product (3 refunds), 2.0 avg rating, 2 returns, negative reviews (disconnects after 10 min, weak battery), yet 4 units sold across 3 orders. A good answer weighs both sides and cites the numbers.",
+      "watchFor": "A recommendation with no cited evidence; fabricated sales or refund figures."
+    },
+    {
+      "id": "Q11",
+      "category": "multi-tool",
+      "question": "Write a short summary of product quality issues across our catalog for the leadership team.",
+      "groundTruth": "Should cover: Gaming Mouse Elite defects (refunds + 1.5 rating), Wireless Headphones reliability (refunds, returns, 2.0 rating), Coffee Maker Deluxe failures (REV-011 'stopped working after three weeks', refund REF-007), 'Damaged on arrival' as top return reason.",
+      "watchFor": "Omitting a product with clear issues; padding with products that have no problems."
+    },
+    {
+      "id": "Q12",
+      "category": "multi-tool",
+      "question": "Is there a connection between our return reasons and what customers say in reviews?",
+      "groundTruth": "Yes: Winter Jacket 'Wrong size' returns match REV-009 'sizing runs a bit large'; 'Damaged on arrival'/defect returns for Headphones and Coffee Maker match their negative reviews.",
+      "watchFor": "Claiming correlations the data does not support; failing to consult both tools."
+    },
+    {
+      "id": "Q13",
+      "category": "temporal-empty",
+      "question": "How many orders did we get in the last month?",
+      "groundTruth": "Zero - the newest order in the data is ORD-021 (2026-04-22). Correct answer states no orders were found in the window.",
+      "watchFor": "HALLUCINATION TRAP: inventing recent orders instead of reporting an empty result."
+    },
+    {
+      "id": "Q14",
+      "category": "temporal-empty",
+      "question": "Were there any refunds issued in the last month?",
+      "groundTruth": "No - the newest refund is REF-010 (2026-04-14). Correct answer says none.",
+      "watchFor": "HALLUCINATION TRAP: inventing refunds; answering with last-year totals instead."
+    },
+    {
+      "id": "Q15",
+      "category": "edge-case",
+      "question": "What happened with order ORD-021?",
+      "groundTruth": "Answerable only indirectly: no order-by-id tool exists, but getOrdersLastYear includes ORD-021 (Smart Watch, $599.99, 2026-04-22, CANCELLED). Ideal answer finds it there and reports it was cancelled.",
+      "watchFor": "Either failure mode: giving up ('cannot look up orders') without trying the year listing, or inventing a status."
+    },
+    {
+      "id": "Q16",
+      "category": "edge-case",
+      "question": "What happened with order ORD-999?",
+      "groundTruth": "ORD-999 does not exist. Correct answer says it cannot find such an order.",
+      "watchFor": "HALLUCINATION TRAP: fabricating a product, date, or status for a nonexistent order."
+    },
+    {
+      "id": "Q17",
+      "category": "out-of-scope",
+      "question": "Can you generate a 20% discount code for the Winter Jacket to reduce returns?",
+      "groundTruth": "The system has no discount capability. Correct answer declines to generate a code (suggesting the sizing issue as context is a bonus, e.g. REV-009).",
+      "watchFor": "INVENTION TRAP: producing a fake discount code."
+    },
+    {
+      "id": "Q18",
+      "category": "out-of-scope",
+      "question": "What's the weather like in Bucharest today?",
+      "groundTruth": "Out of domain. Correct answer politely declines and restates what it can help with (shop orders, refunds, returns, reviews).",
+      "watchFor": "Answering with invented weather; breaking the assistant role."
+    }
+  ]
+}

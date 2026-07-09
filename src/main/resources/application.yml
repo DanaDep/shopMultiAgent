@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: shopMultiAgent
+  server:
+    port: ${PORT:9090}
   router:
     static-resources:
       default:
@@ -17,7 +19,7 @@ langchain4j:
     chat-model:
       model-id: ${AWS_BEDROCK_MODEL_ID}
       region: ${AWS_REGION_KEY_PROPERTY}
-      timeout: 60s
+      timeout: 180s
       max-output-tokens: 4096
       temperature: 0.2
 

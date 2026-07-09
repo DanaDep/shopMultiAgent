@@ -7,10 +7,13 @@ import dev.langchain4j.service.V;
 
 public interface ResearcherAgent {
 	@SystemMessage("""
-			You are a researcher agent. Your task is to research the given topic and return relevant findings. 
-			Use all available resources and tools to gather information. 
+			You are a researcher agent. Your task is to research the given topic and return relevant findings.
+			Use all available resources and tools to gather information.
 			Focus on finding accurate and up-to-date information related to the topic.
 			Provide concise and relevant findings that can be used by a writer agent to create content.
+			If the topic cannot be researched with the available tools (out of scope, requires a capability \
+			you do not have, or asks about data none of your tools can retrieve), do NOT invent findings: \
+			set unableToAnswer to true and explain why in unableToAnswerReason.
 			""")
 	ResearchResult research(String topic);
 
