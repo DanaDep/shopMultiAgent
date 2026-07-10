@@ -2,7 +2,7 @@ micronaut:
   application:
     name: shopMultiAgent
   server:
-    port: ${PORT:9090}
+    port: 9090
   router:
     static-resources:
       default:

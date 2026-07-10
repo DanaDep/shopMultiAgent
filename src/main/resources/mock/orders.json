@@ -29,5 +29,7 @@
   {"id": "ORD-028", "customerId": "CUST-128", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2026-04-08", "status": "COMPLETED"},
   {"id": "ORD-029", "customerId": "CUST-129", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 2, "date": "2026-03-15", "status": "COMPLETED"},
   {"id": "ORD-030", "customerId": "CUST-130", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2026-02-20", "status": "COMPLETED"},
-  {"id": "ORD-031", "customerId": "CUST-131", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2025-10-15", "status": "COMPLETED"}
+  {"id": "ORD-031", "customerId": "CUST-131", "productName": "Gaming Mouse Elite", "category": "Electronics", "amount": 49.99, "quantity": 1, "date": "2025-10-15", "status": "COMPLETED"},
+  {"id": "ORD-032", "customerId": "CUST-132", "productName": "Bluetooth Speaker Lite", "category": "Electronics", "amount": 79.99, "quantity": 4, "date": "2026-04-25", "status": "CANCELLED"},
+  {"id": "ORD-033", "customerId": "CUST-133", "productName": "Bluetooth Speaker Lite", "category": "Electronics", "amount": 79.99, "quantity": 3, "date": "2026-05-02", "status": "CANCELLED"}
 ]

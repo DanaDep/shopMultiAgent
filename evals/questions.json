@@ -57,8 +57,8 @@
       "id": "Q07",
       "category": "single-tool",
       "question": "What are our best-selling products?",
-      "groundTruth": "By units: Yoga Mat Premium (10), Running Shoes Pro (8), then Coffee Maker Deluxe and Gaming Mouse Elite (6 each). NOTE: the tool counts CANCELLED orders (ORD-021, ORD-022) — a known data quirk.",
-      "watchFor": "Ranking by revenue instead of units without saying so."
+      "groundTruth": "Business-correct (COMPLETED only): Yoga Mat Premium (10), Running Shoes Pro (8), Gaming Mouse Elite (6). PLANTED DEFECT: the tool counts CANCELLED orders (ORD-021, ORD-022, ORD-032, ORD-033), so it reports Bluetooth Speaker Lite (11) as the top seller — 7 of those 11 units were never sold. The app will confidently give the wrong winner; only an offline check against derived ground truth catches this.",
+      "watchFor": "Ranking by revenue instead of units without saying so. The online judge is expected to score the wrong Bluetooth Speaker answer highly — that is the point of this question."
     },
     {
       "id": "Q08",
