@@ -51,9 +51,10 @@ public class OrderTool {
                 .orElseThrow(() -> new RuntimeException("No orders found"));
     }
 
-    @Tool("Returns all products ranked by total units sold from most to least, including total revenue per product")
+    @Tool("Returns all products ranked by total units sold from most to least, including total revenue per product; only completed orders count, cancelled orders are excluded")
     public List<TopSellingProduct> getTopSellingProducts() {
         return orders.stream()
+                .filter(o -> "COMPLETED".equals(o.status()))
                 .collect(Collectors.groupingBy(Order::productName))
                 .entrySet().stream()
                 .map(e -> new TopSellingProduct(
