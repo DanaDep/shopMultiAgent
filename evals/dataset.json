@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "Eval question set for the shop multi-agent pipeline. Sent via evals/replay.ps1 to generate traces; later reused as the offline eval dataset.",
+    "description": "Eval dataset for the shop multi-agent pipeline: questions with ground truth, categories, and known failure modes. Used by evals/replay.ps1 (online trace generation) and as the offline eval dataset.",
     "groundTruthNote": "Ground truth computed by hand from src/main/resources/mock/*.json. CAUTION: the tools filter with LocalDate.now() against static data, so date-relative answers drift. Values below verified for July 2026; the 'last month' questions stay empty and the refund total stays $2,039.92 until 2026-09-03 (when REF-007 ages out of the 1-year window).",
     "categories": {
       "single-tool": "Answerable from one tool call; checks factual accuracy.",
@@ -16,7 +16,7 @@
       "category": "single-tool",
       "question": "Which product gets returned the most, and what are the main reasons?",
       "groundTruth": "Winter Jacket, 3 returns (RET-001, RET-004, RET-005): 2x 'Wrong size', 1x 'Damaged on arrival'.",
-      "watchFor": "Bonus if it connects to review REV-009 ('sizing runs a bit large'); failure if it names another product or invents reasons."
+      "watchFor": "Bonus if it connects to review REV-009 ('sizing runs a bit large'); failure if it names another product, invents reasons, or presents the catalog-wide breakdown (Damaged 3, Not as described 2, Wrong size 2, Changed mind 1) as the Jacket's own reasons — the historical failure before getReturnsByReasonForProduct existed (fixed 2026-07-11)."
     },
     {
       "id": "Q02",

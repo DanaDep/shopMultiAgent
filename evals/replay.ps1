@@ -9,7 +9,7 @@ param(
     [int]$DelaySeconds = 2
 )
 
-$dataset = Get-Content -Raw (Join-Path $PSScriptRoot "questions.json") | ConvertFrom-Json
+$dataset = Get-Content -Raw (Join-Path $PSScriptRoot "dataset.json") | ConvertFrom-Json
 $questions = @($dataset.questions)
 if ($Ids) { $questions = @($questions | Where-Object { $Ids -contains $_.id }) }
 

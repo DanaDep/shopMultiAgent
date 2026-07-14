@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Derives the ground truth for evals/questions.json from the mock data files.
+    Derives the ground truth for evals/dataset.json from the mock data files.
 
 .DESCRIPTION
     Reads src/main/resources/mock/*.json and recomputes the expected answer for each
@@ -242,7 +242,7 @@ if (Section 'Q13' 'How many orders did we get in the last month?') {
     Write-Host "  Window: strictly after $($start.ToString('yyyy-MM-dd'))"
     Write-Host "  Newest order in data: $($newest.id) ($($newest.date))"
     if ($recent.Count -eq 0) { Answer 'Zero. Any order the answer mentions is invented.' }
-    else { Answer "$($recent.Count) order(s): $(($recent.id) -join ', ') - the data has aged into the window; update questions.json." }
+    else { Answer "$($recent.Count) order(s): $(($recent.id) -join ', ') - the data has aged into the window; update dataset.json." }
 }
 
 # ---------------------------------------------------------------------------
@@ -254,7 +254,7 @@ if (Section 'Q14' 'Were there any refunds issued in the last month?') {
     Write-Host "  Window: strictly after $($start.ToString('yyyy-MM-dd'))"
     Write-Host "  Newest refund in data: $($newest.id) ($($newest.date))"
     if ($recent.Count -eq 0) { Answer 'None. Any refund or amount mentioned is invented.' }
-    else { Answer "$($recent.Count) refund(s): $(($recent.id) -join ', ') - the data has aged into the window; update questions.json." }
+    else { Answer "$($recent.Count) refund(s): $(($recent.id) -join ', ') - the data has aged into the window; update dataset.json." }
 }
 
 # ---------------------------------------------------------------------------
@@ -265,7 +265,7 @@ if (Section 'Q15' 'What happened with order ORD-021?') {
     Write-Host "  Record: $($o.id)  $($o.productName)  $(Money $o.amount)  qty $($o.quantity)  $($o.date)  $($o.status)"
     Write-Host "  No order-by-id tool exists; only path is getOrdersLastYear (window after $($start.ToString('yyyy-MM-dd')))."
     if ($reachable) { Write-Host '  ORD-021 IS inside that window -> indirectly answerable.' }
-    else { Quirk "ORD-021 ($($o.date)) has aged OUT of the last-year window - the question is no longer answerable; update questions.json." }
+    else { Quirk "ORD-021 ($($o.date)) has aged OUT of the last-year window - the question is no longer answerable; update dataset.json." }
     Answer "Smart Watch, $(Money $o.amount), $($o.date), status $($o.status) - findable only via the last-year listing."
 }
 

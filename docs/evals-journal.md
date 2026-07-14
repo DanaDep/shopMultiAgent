@@ -52,4 +52,4 @@ Short field notes from the evals learning journey on shopMultiAgent.
 
 **End state:** 17/18 (Q11 hit the real 60s timeout — fix ready, activates on next restart). Judge calibrated with a written bias profile. Trap armed and demonstrated.
 
-**Next:** offline evals — promote `questions.json` + derived ground truth to a dataset, let a reference-based check catch the phantom best-seller the online judge scored 0.88.
+**Next:** offline evals — promote the question set (renamed `evals/dataset.json`) + derived ground truth to a dataset, let a reference-based check catch the phantom best-seller the online judge scored 0.88.
